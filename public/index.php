@@ -14,7 +14,14 @@
       <a href="/index.php" class="navbar-brand">Mon calendrier</a>
    </nav>
 
-   <h1>Mars 2018</h1>
+   <?php 
+   require '../src/Date/Month.php';
+   $month = new App\Date\Month(1, 2018); 
+   ?>
+
+   <h1><?= $month->toString(); ?></h1>
+
+   <?php $month->getWeeks(); ?>
 
 </body>
 </html>
