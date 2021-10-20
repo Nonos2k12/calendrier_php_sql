@@ -5,6 +5,7 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="css/calendar.css">
 
    <title>Mon calendrier</title>
 </head>
@@ -15,13 +16,37 @@
    </nav>
 
    <?php 
-   require '../src/Date/Month.php';
-   $month = new App\Date\Month(1, 2018); 
+      require '../src/Date/Month.php';
+      $month = new App\Date\Month( $_GET['month'] ?? null, $_GET['year'] ?? null);
+      $start = $month->getStartingDay()->modify('last monday');
    ?>
 
-   <h1><?= $month->toString(); ?></h1>
+   <div class="d-flex flex-row align-items-center justify-content-between">
+      <h1><?= $month->toString(); ?></h1>
+      <div>
+         <a href="#" class="btn btn-primary">&lt;</a>
+         <a href="#" class="btn btn-primary">&gt;</a>
+      </div>
+   </div>
 
    <?php $month->getWeeks(); ?>
+
+   <table class="calendar__table calendar__table--<?= $month->getWeeks(); ?>weeks">
+      <?php for ($i = 0; $i < $month->getWeeks(); $i++): ?>
+         <tr>
+            <?php foreach($month->days as $k => $day):
+               $date = (clone $start)->modify("+" . ($k + $i * 7) . " days")
+            ?>
+            <td class="<?= $month->withinMonth($date) ? '' : 'calendar__othermonth'; ?>">
+               <?php if ($i === 0): ?>
+                  <div class="calendar__weekday"><?= $day; ?></div>
+                  <?php endif; ?>
+               <div class="calendar__day"><?= $date->format('d'); ?></div>
+            </td>
+            <?php endforeach; ?>
+         </tr>
+         <?php endfor; ?>
+   </table>
 
 </body>
 </html>
