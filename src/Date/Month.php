@@ -8,20 +8,18 @@ class Month {
 
     private $months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
 
-    private $month;
-    private $year;
+    public $month;
+    public $year;
 
     public function __construct(?int $month = null, ?int $year = null) {
 
-        if ($month === null) {
+        if ($month === null || $month < 1 || $month > 12) {
             $month = intval(date('m'));
         }
 
         if ($year === null) {
             $year = intval(date('Y'));
         }
-
-        $month = $month % 12;
         $this->month = $month;
         $this->year = $year;
     }
