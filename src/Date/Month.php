@@ -37,7 +37,7 @@ class Month {
         $end = (clone $start)->modify('+1 month -1 day');
         $weeks = intval($end->format('W')) - intval($start->format('W')) + 1;
         if ($weeks < 0) {
-            $weeks = intval($send->format('W'));
+            $weeks = intval($end->format('W'));
         }
         return $weeks;
     }
