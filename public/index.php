@@ -16,8 +16,8 @@
    </nav>
 
    <?php 
-      require '../src/Date/Month.php';
-      $month = new App\Date\Month( $_GET['month'] ?? null, $_GET['year'] ?? null);
+      require '../src/Calendar/Month.php';
+      $month = new App\Calendar\Month( $_GET['month'] ?? null, $_GET['year'] ?? null);
       $start = $month->getStartingDay();
       $start = $start->format('N') === '1' ? $start : $month->getStartingDay()->modify('last monday');
    ?>
