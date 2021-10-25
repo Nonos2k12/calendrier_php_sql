@@ -14,6 +14,20 @@ class Events {
         $results = $statement->fetchAll();
         return $results;
     }
+
+    public function getEventsBetweenByDay(\Datetime $start, \Datetime $end): array {
+        $events = $this->getEventsBetween($start, $end);
+        $days = [];
+        foreach ($events as $event) {
+            $date = explode (' ', $event['start']) [0];
+            if (!isset ($days[$date])) {
+                $days[$date] = [$event];
+            } else {
+                $days[$date][] = $event;
+            }
+        }
+        return $days;
+    }
 }
 
 ?>
